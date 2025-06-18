@@ -4,22 +4,7 @@ app_publisher = "Enfono Technologies"
 app_description = "Job Record Management"
 app_email = "aravindr@enfono.in"
 app_license = "mit"
-
-# Apps
-# ------------------
-
 # required_apps = []
-
-# Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "jrm",
-# 		"logo": "/assets/jrm/logo.png",
-# 		"title": "Jrm",
-# 		"route": "/jrm",
-# 		"has_permission": "jrm.api.permission.has_app_permission"
-# 	}
-# ]
 
 # Includes in <head>
 # ------------------
@@ -43,7 +28,11 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Purchase Order": "public/js/purchase_order.js",
+    "Sales Order": "public/js/sales_order.js",
+    "Quotation": "public/js/quotation.js"
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -55,7 +44,9 @@ app_license = "mit"
 
 # Home Pages
 # ----------
-
+# app_include = [
+#     "patches.override_payment_entry"
+# ]
 # application home page (will override Website Settings)
 # home_page = "login"
 
@@ -132,6 +123,54 @@ app_license = "mit"
 # override_doctype_class = {
 # 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
+# override_doctype_class = {
+#     "Expense Claim": "jrm.hrms_overrides.expense_claim.CustomExpenseClaim"
+# }
+
+# In your custom app's hooks.py
+# doc_events = {
+#     "*": {
+#         "on_load": "jrm.hrms_overrides.expense_claim.override_methods"
+#     }
+# }
+doc_events = {
+	"Expense Request": {
+		"on_update": "jrm.api.setup"
+	},
+    "Purchase Order": {
+        "on_submit": "jrm.po_hooks.update_job_record_percent",
+        "on_cancel": "jrm.po_hooks.update_job_record_percent",
+        "on_amend": "jrm.po_hooks.update_job_record_percent"
+    },
+    "Purchase Invoice": {
+        "on_submit": "jrm.po_hooks.update_job_record_percent",
+        "on_cancel": "jrm.po_hooks.update_job_record_percent",
+        "on_amend": "jrm.po_hooks.update_job_record_percent"
+    },
+    "Purchase Receipt": {
+        "on_submit": "jrm.po_hooks.update_job_record_percent",
+        "on_cancel": "jrm.po_hooks.update_job_record_percent",
+        "on_amend": "jrm.po_hooks.update_job_record_percent"
+    },
+    "Sales Order": {
+        "on_submit": "jrm.po_hooks.update_job_record_percent",
+        "on_cancel": "jrm.po_hooks.update_job_record_percent",
+        "on_amend": "jrm.po_hooks.update_job_record_percent"
+    },
+    "Sales Invoice": {
+        "on_submit": "jrm.po_hooks.update_job_record_percent",
+        "on_cancel": "jrm.po_hooks.update_job_record_percent",
+        "on_amend": "jrm.po_hooks.update_job_record_percent"
+    },
+    "Delivery Note": {
+        "on_submit": "jrm.po_hooks.update_job_record_percent",
+        "on_cancel": "jrm.po_hooks.update_job_record_percent",
+        "on_amend": "jrm.po_hooks.update_job_record_percent"
+    }
+}
+# override_doctype_class = {
+#     "Payment Entry": "jrm.overrides.CustomPE"    
+# }
 
 # Document Events
 # ---------------
@@ -177,7 +216,10 @@ app_license = "mit"
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "jrm.event.get_events"
 # }
-#
+# override_whitelisted_methods = {
+#     "erpnext.accounts.doctype.payment_entry.payment_entry": "jrm.overrides.erpnext.accounts.doctype.payment_entry.payment_entry"
+# }
+
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
@@ -241,4 +283,17 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+# Custom fields for Sales Invoice
+fixtures = [
+    "Workflow", 
+    "Workflow State", 
+    "Workflow Action Master",
+    {
+        "dt": "Custom Field",
+        "filters": [
+            ["module", "=", "jrm"]
+        ]
+    }
+]
 
