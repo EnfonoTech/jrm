@@ -332,6 +332,7 @@ def get_quotations_for_customer(customer):
     quotations = frappe.get_all("Quotation",
         filters={
             "docstatus": 1,
+            "status": ["!=", "Expired"],
             "quotation_to": "Customer",
             "party_name": customer
         },
