@@ -6,7 +6,7 @@ frappe.ui.form.on("Job Record", {
         frm.events.load_quotation(frm);
     },
     customer: function (frm) {
-        if (frm.is_new() && frm.doc.customer) {
+        if (frm.is_new() && frm.doc.customer && !frm.doc.quotation) {
             frm.add_custom_button(__('Get Items from Quotation'), () => {
                 frappe.call({
                     method: 'jrm.api.get_quotations_for_customer',
