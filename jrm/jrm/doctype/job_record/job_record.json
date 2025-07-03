@@ -236,7 +236,7 @@
    "link_fieldname": "custom_job_record"
   }
  ],
- "modified": "2025-06-17 12:29:37.353447",
+ "modified": "2025-07-03 10:42:10.144466",
  "modified_by": "Administrator",
  "module": "Jrm",
  "name": "Job Record",
@@ -257,6 +257,7 @@
   }
  ],
  "row_format": "Dynamic",
+ "search_fields": "customer, po_no",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
